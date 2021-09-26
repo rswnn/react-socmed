@@ -35,5 +35,5 @@ case 'development':
 default:
   break;
 }
-  
+
 export default { ...config, };

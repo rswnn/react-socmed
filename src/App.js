@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import M from 'materialize-css';
+import 'materialize-css/dist/css/materialize.min.css';
+
+import Routes from 'routes';
+
+import { store, persistor } from 'store.js';
 import './App.css';
 
-function App() {
+const App = () => {
+
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={ logo } className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={ store }>
+      <PersistGate loading={ null } persistor={ persistor }>
+        <Routes/>
+      </PersistGate>
+    </Provider>
   );
-}
+};
 
 export default App;

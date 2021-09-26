@@ -1,6 +1,6 @@
 import config from 'config.js';
 
-const requestHandler = async(method, payload) => {
+const requestHandler = async(method, payload, signal) => {
   try {
     let response = await fetch(`${config.url}${payload.path}`, {
       method: method,
@@ -8,8 +8,13 @@ const requestHandler = async(method, payload) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload.body)
+      body: JSON.stringify(payload.body),
+      signal: signal
     });
+    if (!response.ok) {
+      const body = payload.body;
+      return body;
+    }
     return await response.json();
   } catch (error) {
     return error;

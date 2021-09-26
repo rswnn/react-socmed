@@ -1,11 +1,7 @@
-import React from 'react';
+import Dashboard from './Dashboard';
+import User from './User';
+import Albums from './Albums';
 
-const index = () => {
-  return (
-    <div className='hello'>
-      <h1>Hello</h1>
-    </div>
-  );
+export {
+  Dashboard, User, Albums
 };
-
-export default index;
