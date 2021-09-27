@@ -204,19 +204,11 @@ const useUser = ({ id, history }) => {
     }
   };
 
-  const handleChangeInput = React.useCallback(e => {
+  const handleChangeInput = e => {
 
     const { value, name } = e.target;
     let newInput = {};
 
-    if ((modalMode === postMode[0] && postInput.title !== '' && postInput.body !== '') ||
-    modalMode === commentMode[0] && commentsInput.name !== '' && commentsInput.email !== '' && commentsInput.body !== '' ||
-    (modalMode === postMode[1]) || (modalMode === commentMode[1])
-    ) {
-      setDisableButton(false);
-    } else {
-      setDisableButton(true);
-    }
     if (postMode.includes(modalMode)) {
       newInput = {
         ...postInput,
@@ -230,7 +222,15 @@ const useUser = ({ id, history }) => {
       };
       setCommentsInput(newInput);
     }
-  }, [postInput, commentsInput]);
+    if ((modalMode === postMode[0] && postInput.title !== '' && postInput.body !== '') ||
+    modalMode === commentMode[0] && commentsInput.name !== '' && commentsInput.email !== '' && commentsInput.body !== '' ||
+    (modalMode === postMode[1]) || (modalMode === commentMode[1])
+    ) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  };
 
   const handleScrollIntoView = (i, type) => {
 

@@ -47,10 +47,11 @@ const Albums = ({ match }) => {
           >
             <Card
               closeIcon={ <Icon>close</Icon> }
-              header={ <CardTitle image={ photo.thumbnailUrl }>{ photo.title }</CardTitle> }
+              header={ <CardTitle image={ photo.thumbnailUrl } data-cy='card-photo-title'>{ photo.title }</CardTitle> }
               revealIcon={ <Icon>more_vert</Icon> }
               onClick={ () => onExpandImage(photo) }
               className='pointer'
+              data-cy='card-photo'
             >
               <Text
                 text='Expand this image'
@@ -92,7 +93,7 @@ const Albums = ({ match }) => {
         { renderPhotos() }
         <Modal open={ showModal } onCloseModal={ onResetStateModal } mode='photo'>
           <Col>
-            <img src={ photoDetail.url } />
+            <img src={ photoDetail.url } data-cy='expanded-photo' />
             <PhotoInfo className='photo-info'>
               <Text
                 text={ photoDetail.title }

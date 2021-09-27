@@ -73,17 +73,17 @@ const Collapsible = ({
             onOpenStart: null,
             outDuration: 250,
           } }
-          trigger={ <Icon className='pointer white-icon'>more_horiz</Icon> }
+          trigger={ <Icon id={ isChild ? 'icon-dot-child' : 'icon-dot' } className='pointer white-icon'>more_horiz</Icon> }
         >
           <a onClick={ onClickEditIcon }>
-            <Icon>edit</Icon>
+            <Icon id={ isChild ? 'icon-edit-child' : 'icon-edit' } >edit</Icon>
             <Text
               text={ `Edit ${isChild ? 'Comments' : 'Post'}` }
               typeText='small'
             />
           </a>
           <a onClick={ onClickDeleteIcon }>
-            <Icon>delete</Icon>
+            <Icon id={ isChild ? 'icon-delete-child' : 'icon-delete' }>delete</Icon>
             <Text
               text={ `Delete ${isChild ? 'Comments' : 'Post'}` }
               typeText='small'
@@ -103,9 +103,24 @@ const Collapsible = ({
           <CollapsibleHeader>
             <CollapsibleHeaderContent>
               <Col>
-                <Text text={ header } typeText='largeBold' color={ colors.white } />
-                <Text text={ subHeader } typeText='mediumBold' className='mt-1' color={ colors.white }  />
-                <Text text={ content } typeText='medium' className='mt-1' color={ colors.white } />
+                <Text text={ header }
+                  typeText='largeBold'
+                  color={ colors.white }
+                  data-cy={ `header-post${isChild ? '-child' : ''}` }
+                  id={ `${header}${isChild ? '-child' : ''}`  }
+                />
+                <Text text={ subHeader }
+                  typeText='mediumBold'
+                  className='mt-1'
+                  color={ colors.white }
+                  data-cy={ `subheader-post${isChild ? '-child' : ''}` }
+                />
+                <Text text={ content }
+                  typeText='medium'
+                  className='mt-1'
+                  color={ colors.white }
+                  data-cy={ `content-post${isChild ? '-child' : ''}` }
+                />
               </Col>
               { renderDropDown() }
             </CollapsibleHeaderContent>
@@ -115,6 +130,7 @@ const Collapsible = ({
                 onClick={ handleFilterOpening }
                 className='pointer mt-1'
                 color={ colors.white }
+                data-cy={ isOpen ? 'close-comment' : 'show-comment' }
               />
             </Col>
           </CollapsibleHeader>

@@ -39,7 +39,7 @@ const routes = [
 const Routes = () => {
   return (
     <BrowserRouter history={ history }>
-      <Navbar/>
+      <Navbar history={ history } />
       
       <Container>
         <Switch>

@@ -42,8 +42,10 @@ const User = ({ history, match }) => {
     if (posts.posts.length && !albums.loading) {
       return posts.posts.map((post, i) => {
         return (
-          <div key={ i }
+          <div
+            key={ i }
             ref={ el => postRef.current[i] = el }
+            data-cy='collapsible'
           >
             <Collapsible
               id={ i }
@@ -66,6 +68,7 @@ const User = ({ history, match }) => {
                       onClick={ () => handleShowModal('addComment', { postId: post.id }) }
                       className='pointer mb-2'
                       color={ colors.white }
+                      data-cy='add-comment'
                     />
                     { renderComments(post.id) }
                   </React.Fragment>
@@ -75,32 +78,15 @@ const User = ({ history, match }) => {
         );
       });
     }
-    return (
-      <Row>
-        <Row>
-          <Col s={ 12 } className='mt-3'>
-            <ProgressBar />
-          </Col>
-        </Row>
-        <Row>
-          <Col s={ 6 }>
-            <ProgressBar />
-          </Col>
-        </Row>
-        <Row>
-          <Col s={ 3 }>
-            <ProgressBar />
-          </Col>
-        </Row>
-      </Row>
-    );
+    return null;
   };
 
   const renderAlbums = () => {
     if (albums.albums.length) {
       return albums.albums.map((album, i) => {
         return (
-          <Col key={ i }
+          <Col
+            key={ i }
             m={ 4 }
             s={ 12 }
           >
@@ -108,12 +94,14 @@ const User = ({ history, match }) => {
               closeIcon={ <Icon>close</Icon> }
               header={ <CardTitle image={ images.IluGallery } /> }
               revealIcon={ <Icon>more_vert</Icon> }
+              data-cy='card-album'
             >
               <Text
                 text={ album.title }
                 typeText='mediumBold'
                 color={ colors.tealGreen }
                 className='title-albums'
+                data-cy='title-album'
               />
               <Text
                 text='View the album'
@@ -121,6 +109,7 @@ const User = ({ history, match }) => {
                 typeText='small'
                 color={ colors.tealGreen }
                 className='pointer'
+                data-cy='expand-album'
               />
             </Card>
           </Col>
@@ -167,30 +156,50 @@ const User = ({ history, match }) => {
             typeText='extraExtraLarge'
             className='mb-2'
             color={ colors.tealGreen }
+            data-cy='full-name'
           />
           <Col l={ 6 }>
             <Row className='mb-small header-user'>
               <Col className='header-user'> <Icon className='icon-align' tiny>person</Icon></Col>
               <Col>
-                <Text text={ user ? user.username : '' } typeText='mediumBold' color={ colors.tealGreen } />
+                <Text
+                  text={ user ? user.username : '' }
+                  typeText='mediumBold'
+                  color={ colors.tealGreen }
+                  data-cy='user-name'
+                />
               </Col>
             </Row>
             <Row className='mb-small'>
               <Col className='header-user'> <Icon className='icon-align' tiny>email</Icon></Col>
               <Col>
-                <Text text={ user ? user.email : '' } typeText='mediumBold' color={ colors.tealGreen } />
+                <Text
+                  text={ user ? user.email : '' }
+                  typeText='mediumBold'
+                  color={ colors.tealGreen }
+                  data-cy='user-email'
+                />
               </Col>
             </Row>
             <Row className='mb-small'>
               <Col className='header-user'> <Icon className='icon-align' tiny>phone</Icon></Col>
               <Col>
-                <Text text={ user ? user.phone : '' } typeText='mediumBold' color={ colors.tealGreen } />
+                <Text
+                  text={ user ? user.phone : '' }
+                  typeText='mediumBold'
+                  color={ colors.tealGreen }
+                  data-cy='user-phone'
+                />
               </Col>
             </Row>
             <Row className='mb-small'>
               <Col className='header-user'> <Icon className='icon-align' tiny>link</Icon></Col>
               <Col>
-                <Text text={ user ? user.website : '' } typeText='mediumBold' color={ colors.tealGreen } />
+                <Text
+                  text={ user ? user.website : '' }
+                  typeText='mediumBold' color={ colors.tealGreen }
+                  data-cy='user-website'
+                />
               </Col>
             </Row>
           </Col>
@@ -201,6 +210,7 @@ const User = ({ history, match }) => {
                   typeText='small'
                   className='right-align'
                   color={ colors.tealGreen }
+                  data-cy='user-address'
                 />
               </Col>
               <Col className='no-padding header-user'> <Icon className='icon-align' small>home</Icon></Col>
@@ -212,6 +222,7 @@ const User = ({ history, match }) => {
                   typeText='small'
                   className='right-align'
                   color={ colors.tealGreen }
+                  data-cy='user-company'
                 />
               </Col>
               <Col className='no-padding header-user'> <Icon className='icon-align' small>location_city</Icon></Col>
@@ -292,47 +303,72 @@ const User = ({ history, match }) => {
     }
   };
 
-  console.log(modalMode);
+  const renderTabs = () => {
+    if (!posts.loading && !albums.loading) {
+      return (
+        <Tabs
+          className='tab-demo z-depth-1'
+        >
+          <Tab
+            active={ activeTabs }
+            options={ {
+              duration: 300,
+              onShow: null,
+              responsiveThreshold: Infinity,
+              swipeable: false
+            } }
+            title='Posts'
+          >
+            <Row className='mt-2'>
+              { renderPosts() }
+            </Row>
+          </Tab>
+          <Tab
+            options={ {
+              duration: 300,
+              onShow: null,
+              responsiveThreshold: Infinity,
+              swipeable: false
+            } }
+            title='Albums'
+          >
+            <Row className='mt-2'>
+              { renderAlbums() }
+            </Row>
+          </Tab>
+        </Tabs>
+      );
+    } return (
+      <Row>
+        <Row>
+          <Col s={ 12 } className='mt-3'>
+            <ProgressBar />
+          </Col>
+        </Row>
+        <Row>
+          <Col s={ 12 }>
+            <ProgressBar />
+          </Col>
+        </Row>
+        <Row>
+          <Col s={ 12 }>
+            <ProgressBar />
+          </Col>
+        </Row>
+      </Row>
+    );
+  };
 
   return (
     <Container className='container'>
       { renderUserDetail() }
       <PostWrapper
         onClick={ () => handleShowModal('addPost') }
+        data-cy='add-post'
       >
         <Text text='What do you mind ?' typeText='medium' color={ colors.tealGreen } />
       </PostWrapper>
-      <Tabs
-        className='tab-demo z-depth-1'
-      >
-        <Tab
-          active={ activeTabs }
-          options={ {
-            duration: 300,
-            onShow: null,
-            responsiveThreshold: Infinity,
-            swipeable: false
-          } }
-          title='Posts'
-        >
-          <Row className='mt-2'>
-            { renderPosts() }
-          </Row>
-        </Tab>
-        <Tab
-          options={ {
-            duration: 300,
-            onShow: null,
-            responsiveThreshold: Infinity,
-            swipeable: false
-          } }
-          title='Albums'
-        >
-          <Row className='mt-2'>
-            { renderAlbums() }
-          </Row>
-        </Tab>
-      </Tabs>
+      { renderTabs() }
       <Modal
         open={ showModal }
         onCloseModal={ handleCloseModal }

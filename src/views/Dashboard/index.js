@@ -46,7 +46,8 @@ const Dashboard = ({ history }) => {
       <Row>
         { !loading && users ? users.map((user, i) => {
           return (
-            <Col key={ i }
+            <Col
+              key={ i }
               m={ 4 }
               s={ 12 }
             >
@@ -56,11 +57,13 @@ const Dashboard = ({ history }) => {
                 revealIcon={ <Icon>more_vert</Icon> }
                 className='pointer'
                 onClick={ () =>  handleRedirect(user.id) }
+                data-cy='card-user'
               >
                 <Text
                   text={ user.name }
                   typeText='small'
                   color={ colors.tealGreen }
+                  data-cy='title-user'
                 />
               </Card>
             </Col>
