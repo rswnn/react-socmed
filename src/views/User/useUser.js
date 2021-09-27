@@ -46,6 +46,7 @@ const useUser = ({ id, history }) => {
   const [modalMode, setModalMode] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [activeTabs, setActiveTabs] = useState(false);
+  const [disableButton, setDisableButton] = useState(true);
   const [postInput, setpostInput] = useState(initialStatePostInput);
   const [commentsInput, setCommentsInput] = useState(initalStateCommentInput);
 
@@ -61,8 +62,8 @@ const useUser = ({ id, history }) => {
   useEffect(() => {
     setActiveTabs(true);
     return () => {
+      setActiveTabs(false);
       window.onpopstate = () => {
-        setActiveTabs(false);
         handleCloseModal();
       };
     };
@@ -135,6 +136,9 @@ const useUser = ({ id, history }) => {
         postId: data.postId
       });
     }
+    if (type === tempCommentMode[1] || type === tempPostMode[1]) {
+      setDisableButton(false);
+    }
   }, [showModal]);
 
   const handleCloseModal = useCallback(() => {
@@ -145,6 +149,7 @@ const useUser = ({ id, history }) => {
     }
     setModalMode('');
     setShowModal(false);
+    setDisableButton(true);
     allowScroll();
   }, [showModal]);
 
@@ -154,7 +159,7 @@ const useUser = ({ id, history }) => {
     if (tempPostMode.includes(modalMode)) {
       newPost = {
         id: postInput.id,
-        userId: parseInt(id),
+        userId: id,
         title: postInput.title,
         body: postInput.body
       };
@@ -204,6 +209,14 @@ const useUser = ({ id, history }) => {
     const { value, name } = e.target;
     let newInput = {};
 
+    if ((modalMode === postMode[0] && postInput.title !== '' && postInput.body !== '') ||
+    modalMode === commentMode[0] && commentsInput.name !== '' && commentsInput.email !== '' && commentsInput.body !== '' ||
+    (modalMode === postMode[1]) || (modalMode === commentMode[1])
+    ) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
     if (postMode.includes(modalMode)) {
       newInput = {
         ...postInput,
@@ -254,7 +267,9 @@ const useUser = ({ id, history }) => {
     posts,
     albums,
     comments,
-    handleCloseModal
+    handleCloseModal,
+    setActiveTabs,
+    disableButton
   };
 };
 

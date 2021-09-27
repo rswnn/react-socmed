@@ -6,6 +6,7 @@ import {
 } from 'react-materialize';
 
 import { Text } from 'components';
+import { colors } from 'constant';
 
 import {
   Container, ContainerWrapper, CollapsibleHeader, CollapsibleContentWrapper, CollapsibleContent, CollapsibleHeaderContent
@@ -72,19 +73,21 @@ const Collapsible = ({
             onOpenStart: null,
             outDuration: 250,
           } }
-          trigger={ <Icon className='pointer'>more_horiz</Icon> }
+          trigger={ <Icon className='pointer white-icon'>more_horiz</Icon> }
         >
           <a onClick={ onClickEditIcon }>
             <Icon>edit</Icon>
             <Text
               text={ `Edit ${isChild ? 'Comments' : 'Post'}` }
-              typeText='small' />
+              typeText='small'
+            />
           </a>
           <a onClick={ onClickDeleteIcon }>
             <Icon>delete</Icon>
             <Text
               text={ `Delete ${isChild ? 'Comments' : 'Post'}` }
-              typeText='small' />
+              typeText='small'
+            />
           </a>
         </Dropdown>
       );
@@ -100,9 +103,9 @@ const Collapsible = ({
           <CollapsibleHeader>
             <CollapsibleHeaderContent>
               <Col>
-                <Text text={ header } typeText='largeBold' />
-                <Text text={ subHeader } typeText='mediumBold' className='mt-1'  />
-                <Text text={ content } typeText='medium' className='mt-1' />
+                <Text text={ header } typeText='largeBold' color={ colors.white } />
+                <Text text={ subHeader } typeText='mediumBold' className='mt-1' color={ colors.white }  />
+                <Text text={ content } typeText='medium' className='mt-1' color={ colors.white } />
               </Col>
               { renderDropDown() }
             </CollapsibleHeaderContent>
@@ -111,11 +114,12 @@ const Collapsible = ({
                 typeText='small'
                 onClick={ handleFilterOpening }
                 className='pointer mt-1'
+                color={ colors.white }
               />
             </Col>
           </CollapsibleHeader>
         </Row>
-        <CollapsibleContentWrapper style={ { height } }>
+        <CollapsibleContentWrapper style={ { height } } isChild={ isChild }>
           <div ref={ ref }>
             <CollapsibleContent>{ children }</CollapsibleContent>
           </div>

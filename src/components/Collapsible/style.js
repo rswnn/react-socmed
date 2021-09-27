@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colors } from 'constant';
 
 const Container = styled.div`
 
@@ -20,6 +21,8 @@ const ContainerWrapper = styled.div`
      &:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
      }
+    background-color: ${colors.tealGreen};
+    border-radius: 16px;
 `;
 
 const CollapsibleHeader = styled.div`
@@ -29,7 +32,7 @@ const CollapsibleHeader = styled.div`
 const CollapsibleContentWrapper = styled.div`
     overflow: hidden;
     transition: height 0.2s ease-in-out;
-    border-top: 1px solid #dee2e6 !important;
+    border-top: ${props => props.isChild ? 'unset !important' : '1px solid #dee2e6 !important'};
 `;
 
 const CollapsibleContent = styled.div`

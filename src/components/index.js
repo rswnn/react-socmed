@@ -4,7 +4,8 @@ import Text from './Text';
 import Container from './Container';
 import Toast from './Toast';
 import Button from './Button';
+import Navbar from './Navbar';
 
 export {
-  Collapsible, Modal, Text, Container, Toast, Button
+  Collapsible, Modal, Text, Container, Toast, Button, Navbar
 };

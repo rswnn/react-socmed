@@ -1,17 +1,19 @@
 import React from 'react';
 import {
-  Tabs, Tab, Row, Icon, Col, TextInput, Textarea
+  Tabs, Tab, Row, Icon, Col, TextInput, Textarea, Card, CardTitle, ProgressBar
 } from 'react-materialize';
 
 import {
   Collapsible, Modal, Text
 } from 'components';
+import { colors } from 'constant';
 
 import useUser from './useUser';
+import images from 'assets/images';
 import { Container, PostWrapper } from './style';
 
 const User = ({ history, match }) => {
-
+  const { id } = match.params;
   const {
     onShowComments,
     handleChangeInput,
@@ -29,14 +31,15 @@ const User = ({ history, match }) => {
     posts,
     albums,
     comments,
-    handleCloseModal
+    handleCloseModal,
+    disableButton
   } = useUser({
-    id: match.params.id,
+    id: id,
     history: history
   });
 
   const renderPosts = () => {
-    if (posts.posts.length) {
+    if (posts.posts.length && !albums.loading) {
       return posts.posts.map((post, i) => {
         return (
           <div key={ i }
@@ -62,7 +65,7 @@ const User = ({ history, match }) => {
                       typeText='mediumBold'
                       onClick={ () => handleShowModal('addComment', { postId: post.id }) }
                       className='pointer mb-2'
-                      color='#009688'
+                      color={ colors.white }
                     />
                     { renderComments(post.id) }
                   </React.Fragment>
@@ -72,16 +75,55 @@ const User = ({ history, match }) => {
         );
       });
     }
-    return <React.Fragment/>;
+    return (
+      <Row>
+        <Row>
+          <Col s={ 12 } className='mt-3'>
+            <ProgressBar />
+          </Col>
+        </Row>
+        <Row>
+          <Col s={ 6 }>
+            <ProgressBar />
+          </Col>
+        </Row>
+        <Row>
+          <Col s={ 3 }>
+            <ProgressBar />
+          </Col>
+        </Row>
+      </Row>
+    );
   };
 
   const renderAlbums = () => {
     if (albums.albums.length) {
       return albums.albums.map((album, i) => {
         return (
-          <div key={ i } onClick={ () => handleRedirect(album.id) }>
-            <p>{ album.title }</p>
-          </div>
+          <Col key={ i }
+            m={ 4 }
+            s={ 12 }
+          >
+            <Card
+              closeIcon={ <Icon>close</Icon> }
+              header={ <CardTitle image={ images.IluGallery } /> }
+              revealIcon={ <Icon>more_vert</Icon> }
+            >
+              <Text
+                text={ album.title }
+                typeText='mediumBold'
+                color={ colors.tealGreen }
+                className='title-albums'
+              />
+              <Text
+                text='View the album'
+                onClick={ () =>  handleRedirect(album.id) }
+                typeText='small'
+                color={ colors.tealGreen }
+                className='pointer'
+              />
+            </Card>
+          </Col>
         );
       });
     }
@@ -120,30 +162,35 @@ const User = ({ history, match }) => {
     if (user) {
       return (
         <Row >
-          <Text text={ user ? user.name : '' } typeText='extraExtraLarge' className='mb-2' />
+          <Text
+            text={ user ? user.name : '' }
+            typeText='extraExtraLarge'
+            className='mb-2'
+            color={ colors.tealGreen }
+          />
           <Col l={ 6 }>
-            <Row className='mb-small'>
-              <Col> <Icon className='icon-align' tiny>person</Icon></Col>
+            <Row className='mb-small header-user'>
+              <Col className='header-user'> <Icon className='icon-align' tiny>person</Icon></Col>
               <Col>
-                <Text text={ user ? user.username : '' } typeText='mediumBold' />
+                <Text text={ user ? user.username : '' } typeText='mediumBold' color={ colors.tealGreen } />
               </Col>
             </Row>
             <Row className='mb-small'>
-              <Col> <Icon className='icon-align' tiny>email</Icon></Col>
+              <Col className='header-user'> <Icon className='icon-align' tiny>email</Icon></Col>
               <Col>
-                <Text text={ user ? user.email : '' } typeText='mediumBold' />
+                <Text text={ user ? user.email : '' } typeText='mediumBold' color={ colors.tealGreen } />
               </Col>
             </Row>
             <Row className='mb-small'>
-              <Col> <Icon className='icon-align' tiny>phone</Icon></Col>
+              <Col className='header-user'> <Icon className='icon-align' tiny>phone</Icon></Col>
               <Col>
-                <Text text={ user ? user.phone : '' } typeText='mediumBold' />
+                <Text text={ user ? user.phone : '' } typeText='mediumBold' color={ colors.tealGreen } />
               </Col>
             </Row>
             <Row className='mb-small'>
-              <Col> <Icon className='icon-align' tiny>link</Icon></Col>
+              <Col className='header-user'> <Icon className='icon-align' tiny>link</Icon></Col>
               <Col>
-                <Text text={ user ? user.website : '' } typeText='mediumBold' />
+                <Text text={ user ? user.website : '' } typeText='mediumBold' color={ colors.tealGreen } />
               </Col>
             </Row>
           </Col>
@@ -153,9 +200,10 @@ const User = ({ history, match }) => {
                 <Text text={ user ? `${user.address.street} ${user.address.suite} ${user.address.city} ${user.address.zipcode}` : '' }
                   typeText='small'
                   className='right-align'
+                  color={ colors.tealGreen }
                 />
               </Col>
-              <Col className='no-padding'> <Icon className='icon-align' small>home</Icon></Col>
+              <Col className='no-padding header-user'> <Icon className='icon-align' small>home</Icon></Col>
             </Row>
             <Row className='mb-small position-right'>
               <Col>
@@ -163,9 +211,10 @@ const User = ({ history, match }) => {
                   text={ user ? `${user.company.name} ${user.company.catchPhrase} ${user.company.bs}` : '' }
                   typeText='small'
                   className='right-align'
+                  color={ colors.tealGreen }
                 />
               </Col>
-              <Col className='no-padding'> <Icon className='icon-align' small>location_city</Icon></Col>
+              <Col className='no-padding header-user'> <Icon className='icon-align' small>location_city</Icon></Col>
             </Row>
           </Col>
         </Row>
@@ -179,8 +228,10 @@ const User = ({ history, match }) => {
     case 'editPost':
       return (
         <Col>
-          <Text text={ `${modalMode === 'addPost' ? 'Add' : 'Edit'} your Post` }
+          <Text
+            text={ `${modalMode === 'addPost' ? 'Add' : 'Edit'} your Post` }
             typeText='largeBold'
+            color={ colors.tealGreen }
           />
           <TextInput
             value={ postInput.title }
@@ -200,15 +251,21 @@ const User = ({ history, match }) => {
     case 'deleteComment':
       return (
         <Col>
-          <Text text={ `Are you sure delete this ${modalMode === 'deletePost' ? 'post' : 'comment'}?` } typeText='largeBold' />
+          <Text
+            text={ `Are you sure delete this ${modalMode === 'deletePost' ? 'post' : 'comment'}?` }
+            typeText='largeBold'
+            color={ colors.tealGreen }
+          />
         </Col>
       );
     case 'addComment':
     case 'editComment':
       return (
         <Col>
-          <Text text={ `${modalMode === 'addComment' ? 'Add' : 'Edit' } your comment` }
+          <Text
+            text={ `${modalMode === 'addComment' ? 'Add' : 'Edit' } your comment` }
             typeText='largeBold'
+            color={ colors.tealGreen }
           />
           <TextInput
             value={ commentsInput.name }
@@ -235,18 +292,15 @@ const User = ({ history, match }) => {
     }
   };
 
-  if (albums.loading || !posts.posts.length) {
-    return <h1>Loading lagi</h1>;
-  }
+  console.log(modalMode);
 
-  console.log(comments, posts);
   return (
     <Container className='container'>
       { renderUserDetail() }
       <PostWrapper
         onClick={ () => handleShowModal('addPost') }
       >
-        <Text text='What do you mind ?' typeText='medium' />
+        <Text text='What do you mind ?' typeText='medium' color={ colors.tealGreen } />
       </PostWrapper>
       <Tabs
         className='tab-demo z-depth-1'
@@ -286,6 +340,7 @@ const User = ({ history, match }) => {
         onOk={ onSubmitPost }
         isDeleteModal={ modalMode === 'deletePost' || modalMode === 'deleteComment' }
         mode={ modalMode }
+        disableButton={ disableButton }
       >
         { renderContentModal() }
       </Modal>

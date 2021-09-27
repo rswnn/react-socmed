@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colors } from 'constant';
 
 const Container = styled.div`
     .position-right {
@@ -7,6 +8,10 @@ const Container = styled.div`
     }
     .no-padding {
         /* padding: 0 !important; */
+    }
+
+    .header-user {
+        color: ${colors.tealGreen};
     }
 
 `;
@@ -20,7 +25,7 @@ const PostWrapper = styled.div`
     cursor: pointer;
     padding:10px 20px;
     :hover {
-        background-color: #fafafa;
+        background-color: ${colors.white};
     }
 `;
 

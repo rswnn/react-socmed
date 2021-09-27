@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 import {
   Dashboard, User, Albums
 } from 'views';
-import { Container } from 'components';
+import { Container, Navbar } from 'components';
 
 const history = createBrowserHistory();
 
@@ -39,8 +39,9 @@ const routes = [
 const Routes = () => {
   return (
     <BrowserRouter history={ history }>
+      <Navbar/>
+      
       <Container>
-        { /* <Navbar/> */ }
         <Switch>
           {
             routes.map(route => <Route exact={ route.exact } key={ route.path } path={ route.path } component={ route.component }/>)

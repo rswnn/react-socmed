@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Button, Col, Icon, Modal
+  Button, Icon, Modal
 } from 'react-materialize';
 
 import { Text } from 'components';
@@ -8,14 +8,14 @@ import { Text } from 'components';
 import { FooterModal } from './style';
 
 const index = ({
-  open, children, onCloseModal, showFooter = false, onOk, isDeleteModal = false, mode
+  open, children, onCloseModal, showFooter = false, onOk, isDeleteModal = false, mode, disableButton = false
 }) => {
 
   const renderFooter = () => {
     if (showFooter) {
       return (
         <FooterModal>
-          <Button onClick={ onOk }>
+          <Button onClick={ onOk } disabled={ disableButton }>
             {
               isDeleteModal &&
                 <Icon>delete</Icon>
@@ -34,8 +34,8 @@ const index = ({
       id={ `Modal-${mode}` }
       open={ open }
       options={ {
-        dismissible: true,
-        endingTop: '20%',
+        dismissible: false,
+        endingTop: mode === 'photo' ? '5%' : '20%',
         inDuration: 250,
         onCloseEnd: null,
         onCloseStart: null,
@@ -47,7 +47,7 @@ const index = ({
         startingTop: '4%',
       } }
     >
-      <Icon key onClick={ onCloseModal } className='icon-close-modal'>close</Icon>
+      <Icon key onClick={ onCloseModal } className='icon-close-modal pointer tealgreen-icon'>close</Icon>
       { children }
       { renderFooter() }
     </Modal>
