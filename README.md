@@ -1,3 +1,15 @@
+
+# About the app
+
+The web app implementing based on [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com).
+
+<img width="500" alt="Screen Shot 2021-09-28 at 03 26 03" src="https://user-images.githubusercontent.com/39334864/134980441-3f398878-1926-4908-81dc-4d6932a0b4e1.png">
+
+Actualy the app already deployed at [http://ec2-3-91-218-70.compute-1.amazonaws.com](http://ec2-3-91-218-70.compute-1.amazonaws.com/) unfortunately, sometimes my instance sudenly stopped lol. yeah because my aws account is AWS educate. i got the answer from this [link](https://stackoverflow.com/questions/68515500/aws-ec2-keeps-shutting-down-automatically)
+
+anyway. I've deployed on another server. check the demo on this [link](https://react-socmed-dashboard.herokuapp.com/)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
