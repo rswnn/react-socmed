@@ -47,7 +47,7 @@ const index = ({
         startingTop: '4%',
       } }
     >
-      <Icon key onClick={ onCloseModal } className='icon-close-modal pointer tealgreen-icon'>close</Icon>
+      <Icon onClick={ onCloseModal } className='icon-close-modal pointer tealgreen-icon'>close</Icon>
       { children }
       { renderFooter() }
     </Modal>
